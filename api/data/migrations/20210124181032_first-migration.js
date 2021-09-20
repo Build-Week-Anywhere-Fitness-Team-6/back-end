@@ -4,6 +4,7 @@ exports.up = async (knex) => {
       users.increments('user_id')
       users.string('user_name', 200).notNullable()
       users.string('password', 200).notNullable()
+      users.string('role', 200).notNullable()
       users.timestamps(false, true)
     })
 }
