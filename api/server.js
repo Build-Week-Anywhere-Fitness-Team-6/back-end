@@ -2,7 +2,7 @@ const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
 const db = require('./data/db-config')
-const AUthRouter = require('./Auth/AuthRouter')
+const ClassRouter = require('./GymClasses/ClassRouter')
 const AuthRouter = require('./Auth/AuthRouter')
 function getAllUsers() { return db('users') }
 
@@ -20,13 +20,14 @@ server.use(helmet())
 server.use(cors())
 
 server.use('/api/auth', AuthRouter)
+server.use('/api', ClassRouter)
 server.get('/api/users', async (req, res) => {
   res.json(await getAllUsers())
 })
 
-server.post('/api/users', async (req, res) => {
-  res.status(201).json(await insertUser(req.body))
-})
+// server.post('/api/users', async (req, res) => {
+//   res.status(201).json(await insertUser(req.body))
+// })
 
 server.use((err, req, res, next) => { // eslint-disable-line
   res.status(err.status || 500).json({

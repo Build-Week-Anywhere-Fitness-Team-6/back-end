@@ -9,7 +9,7 @@ exports.up = async (knex) => {
     })
   .createTable('classes', table =>{
     table.increments('class_id')
-    table.string('name').notNullable()
+    table.string('name').notNullable().unique()
     table.string('type').notNullable()
     table.string('time').notNullable()
     table.string('day').notNullable()
@@ -20,9 +20,26 @@ exports.up = async (knex) => {
     table.integer('max_capacity').notNullable()
     table.string('punch_pass').notNullable()
   })
+
+
+  .createTable('users_classes', table =>{
+    table.increments()
+    table.integer('class_id')
+    .references('class_id')
+    .inTable('classes')
+    .onDelete('CASCADE')
+    .onUpdate('CASCADE')
+    table.integer('user_id')
+    .references('user_id')
+    .inTable('users')
+    .onDelete('CASCADE')
+    .onUpdate('CASCADE')
+  })
 }
 
 exports.down = async (knex) => {
-  await knex.schema.dropTableIfExists('users')
+  await knex.schema.dropTableIfExists('users_classes')
   await knex.schema.dropTableIfExists('classes')
+  await knex.schema.dropTableIfExists('users')
+
 }
