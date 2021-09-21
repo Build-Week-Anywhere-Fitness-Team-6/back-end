@@ -55,7 +55,7 @@ const Filter = (props) => {
           onChange={handleChange}
         />
         <select
-          name="class_start"
+          name="class_time"
           value={props.class_time}
           onChange={handleChange}
         >
@@ -66,7 +66,7 @@ const Filter = (props) => {
           ))}
         </select>
         <select
-          name="class_start"
+          name="class_date"
           value={props.class_date}
           onChange={handleChange}
         >
