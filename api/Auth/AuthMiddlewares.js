@@ -1,6 +1,38 @@
 const User = require('../Users/UsersModel')
+const jwt = require('jsonwebtoken')
+const JWT_SECRET = process.env.JWT_SECRET
 
+const restricted = (req, res, next) => {
+    const token = req.headers.authorization
+    if(token){
+        jwt.verify(
+            token,
+            JWT_SECRET,
+            (err, decoded) => {
+              if (err) return next({
+                status: 401, message: 'token invalid', realErrorMessage: err.message,
+              })
+              req.decodedJwt = decoded
+              next()
+            }
+          )
+    }
+    else{
+        next({
+            status: 401, message: 'You need to sign in to access this content!'
+          })
+    }
 
+}
+
+const only = role => (req,res,next)=> {
+    if(req.decodedJwt.role === role){
+        next()
+    }
+    else{
+        next({status:401, message: `Only ${role} have access to this content!`})
+    }
+}
 
 const checkIfSent = (req, res , next) => {
 if(!req.body.user_name || !req.body.password){
@@ -36,4 +68,4 @@ const checkAuthcode = (req, res , next) => {
     }
 
 }
-module.exports = {checkIfSent,checkAuthcode, checkIfUserTaken}
+module.exports = {checkIfSent,checkAuthcode, checkIfUserTaken,restricted,only}

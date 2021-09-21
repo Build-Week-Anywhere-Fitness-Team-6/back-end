@@ -17,11 +17,14 @@ AuthRouter.post('/register',checkIfSent,checkIfUserTaken,checkAuthcode, async(re
     res.status(201).json(created)
 })
 
+
+
 AuthRouter.post('/login',checkIfSent, async(req,res,next) => {
     let user = await User.findByUsername(req.body.user_name)
     if(user && bcrypt.compareSync(req.body.password, user.password)){
         const token = token_builder(user)
         res.status(200).json({
+            role: user.role,
             message: `Welcome ${user.user_name}!`,
             token: token
         })
