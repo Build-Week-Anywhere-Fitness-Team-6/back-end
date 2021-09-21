@@ -7,6 +7,19 @@ exports.up = async (knex) => {
       users.string('role', 200).notNullable()
       users.timestamps(false, true)
     })
+  .createTable('classes', table =>{
+    table.increments('class_id')
+    table.string('name').notNullable()
+    table.string('type').notNullable()
+    table.string('time').notNullable()
+    table.string('day').notNullable()
+    table.integer('duration').notNullable()
+    table.string('intensity').notNullable()
+    table.string('location').notNullable()
+    table.integer('current_attendees').notNullable()
+    table.integer('max_capacity').notNullable()
+    table.string('punch_pass').notNullable()
+  })
 }
 
 exports.down = async (knex) => {
