@@ -1,7 +1,7 @@
 const Class = require('./ClassModel')
 
 const checkIfSent = (req, res , next) => {
-    if(!req.body.name || !req.body.type || !req.body.time || !req.body.day || !req.body.duration || !req.body.intensity || !req.body.location || !req.body.current_attendees || !req.body.max_capacity || !req.body.punch_pass){
+    if(!req.body.name || !req.body.type || !req.body.time || !req.body.day || !req.body.duration || !req.body.intensity || !req.body.location || !req.body.max_capacity || !req.body.punch_pass){
         next({status: 400, message:'Fields marked with * are  required!' })
     }
     else{
