@@ -1,6 +1,6 @@
 const express = require('express')
 const helmet = require('helmet')
-// const cors = require('cors')
+const cors = require('cors')
 const db = require('./data/db-config')
 const ClassRouter = require('./GymClasses/ClassRouter')
 const AuthRouter = require('./Auth/AuthRouter')
@@ -17,7 +17,7 @@ async function insertUser(user) {
 const server = express()
 server.use(express.json())
 server.use(helmet())
-// server.use(cors())
+server.use(cors())
 
 server.use('/api/auth', AuthRouter)
 server.use('/api', ClassRouter)
